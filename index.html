@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>Liste de Films</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-rc.0/angular.min.js"></script>
+	<script src="controller.js"></script>
+</head>
+<body ng-controller="controller">
+	<form action="#" ng-submit="submitFilm($event)">
+		<input type="text" name="title" ng-model="film.title" placeholder="Titre">
+		<textarea name="synopsis" cols="30" rows="10" ng-model="film.synopsis" placeholder="Synopsis"></textarea>
+		<select name="genre" ng-model="film.genre">
+			<option value="" selected="selected">Genre</option>
+			<option ng-repeat="genre in filmGenres" placeholder="Genre" value="{{genre}}">{{genre}}</option>
+		</select>
+		<input type="url" ng-model="film.img" placeholder="Image url">
+		<textarea name="actors" cols="30" rows="10" ng-model="film.actors" placeholder="Acteurs"></textarea>
+		<input type="submit" value="Valider">
+	</form>
+
+	<select name="genre" ng-model="list.filter">
+		<option value="" selected="selected">Filtrer par genre</option>
+		<option ng-repeat="genre in filmGenres" placeholder="Genre" value="{{genre}}">{{genre}}</option>
+	</select>
+
+	<div class="film" ng-repeat="film in films" ng-hide="list.filter.length && film.genre != list.filter">
+		<span ng-click="delete($index)" class="close">X</span>
+		<img ng-src="{{film.img}}" alt="{{film.title}}">
+		<div class="info">
+			<h2>{{film.title}}</h2>
+			<p>{{film.synopsis}}</p>
+			<p>Genre : {{film.genre}}</p>
+			<p>Acteurs :
+				<ul>
+					<li ng-repeat="actor in film.actors">{{actor}}</li>
+				</ul>
+			</p>
+		</div>
+	</div>
+</body>
+</html>
